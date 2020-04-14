@@ -1,0 +1,121 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.header-color {
+  background: #000000;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #222222, #000000);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #2c2c2c, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  /*background: #0F2027;  /* fallback for old browsers */
+  /*background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
+  /*background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.home-grid {
+  /*background: #050814;  /* fallback for old browsers */
+  /*opacity: 0.95;
+  /*background: -webkit-linear-gradient(to right, #414345, #232526);  /* Chrome 10-25, Safari 5.1-6 */
+  /*background: linear-gradient(to right, #414345, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  /*background: #191b29;*/
+  /*background: #212127fa;*/
+  /*background: #2c2c31fa;*/
+  background: #424242fa;
+  text-align: center;
+  position: fixed;
+  top: 35px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.game-img {
+  height: 250px;
+  padding-top: 5em;
+}
+
+.banner-text {
+  /*background: #656669;  /* fallback for old browsers */
+ /* background: -webkit-linear-gradient(to left, #004e92, #000428);  /* Chrome 10-25, Safari 5.1-6 */
+ /* background: linear-gradient(to left, #004e92, #000428); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+ /*background-image: linear-gradient(to right, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%);*/
+/* background-image: linear-gradient(-20deg, #fc6076 0%, #ff9a44 100%);*/
+background-image: linear-gradient(120deg, #4f7daa 0%, #b592d6 100%);
+/*background-image: linear-gradient(-225deg, #2580B3 0%, #CBBACC 100%);*/
+/*background-image: linear-gradient(-225deg, #7085B6 0%, #87A7D9 50%, #DEF3F8 100%);*/
+/*background-image: linear-gradient(to bottom, #a3bded 0%, #CBBACC 15%, #6991c7 100%);*/
+  opacity: 1;
+  width: 95%;
+  margin: auto;
+  border-radius: 10px;
+}
+
+.banner-text h1 {
+  font-family: sans-serif, Arial;
+  font-size: 50px;
+  font-weight: bold;
+  color: white;
+  text-align: left;
+  padding-left: 40px;
+}
+
+.banner-text hr {
+  border-top: 5px dotted white;
+  width: 50%;
+  margin: auto;
+}
+
+.banner-text p {
+  color: white;
+  font-size: 20px;
+  padding: 1em;
+}
+
+.footer-text {
+  color: black;
+}
+
+.home-grid p {
+  color: white;
+}
+
+/*.game-cell {
+  background-color: black;
+  margin: auto;
+  height: 100%;
+  width: 20%;
+}*/
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
