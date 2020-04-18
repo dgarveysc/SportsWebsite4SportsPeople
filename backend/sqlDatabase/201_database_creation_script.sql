@@ -9,14 +9,16 @@ CREATE TABLE Users(
     username VARCHAR(50) NOT NULL,
     passphrase VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
-    points int(11),
-    statsID INT(11) NOT NULL,
+    points INT(11),
+		elo INT(11),
+    --statsID INT(11) NOT NULL, (not needed b/c stats represent )
     FOREIGN KEY fk3(statsID) REFERENCES Stats(statsID)
 );
 
 CREATE TABLE Bracket (
 -- don't need INT(11), just say INT
  bracketID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+ gameID INT NULL, --in case we delineate by game for statistics and rank
  bracketName VARCHAR(50) NOT NULL,
  bracketS1 INT NOT NULL,
  bracketS2 INT NOT NULL,
@@ -82,14 +84,18 @@ CREATE TABLE Bracket (
  FOREIGN KEY fk30(bracketS30) REFERENCES UserToGameStats(userToGameStatsID),
  FOREIGN KEY fk31(bracketS31) REFERENCES UserToGameStats(userToGameStatsID)
  );
- 
+
  CREATE TABLE Stats (
 	statsID INT(11) PRIMARY KEY AUTO_INCREMENT,
-	avgPPG INT(11) NULL,
-    gamesBetSoFar INT(8) NULL
-    
+	won BOOLEAN NULL,
+	prize INT(11) NULL,
+	bracketRound INT(11) NOT NULL,
+	gameID INT(11) NULL,
+	XP INT(11) NULL,
+	oppID INT(11) NULL, --to get information about opponent's rank
+	FOREIGN KEY fk1(oppID) REFERENCES Users(UserID)
 );
- 
+
  CREATE TABLE UserToBracket (
 	userToBracketID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     userID INT NOT NULL,
@@ -97,7 +103,7 @@ CREATE TABLE Bracket (
     FOREIGN KEY fk1(userID) REFERENCES Users(userID),
     FOREIGN KEY fk2(bracketID) REFERENCES Bracket(bracketID)
  );
- 
+
  CREATE TABLE UserToGameStats(
 	userToGameStatsID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     userID INT NOT NULL,
