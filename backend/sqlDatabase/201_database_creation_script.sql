@@ -86,14 +86,15 @@ CREATE TABLE Bracket (
  );
 
  CREATE TABLE Stats (
+	 --assume this table is in chronological order, created when user updates a score
+	 --immediately update
 	statsID INT(11) PRIMARY KEY AUTO_INCREMENT,
-	won BOOLEAN NULL,
+	won BOOLEAN NOT NULL,
 	prize INT(11) NULL,
 	bracketRound INT(11) NOT NULL,
-	gameID INT(11) NULL,
-	XP INT(11) NULL,
-	oppID INT(11) NULL, --to get information about opponent's rank
-	FOREIGN KEY fk1(oppID) REFERENCES Users(UserID)
+	gameID INT(11) NULL, --in case we add support for different games
+	xp INT(11) NULL,
+	oppRank INT(11) NULL --to get information about opponent's rank
 );
 
  CREATE TABLE UserToBracket (
