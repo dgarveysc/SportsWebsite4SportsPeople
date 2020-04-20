@@ -93,7 +93,7 @@ CREATE TABLE Bracket (
 	prize INT(11) NULL,
 	bracketRound INT(11) NOT NULL,
 	gameID INT(11) NULL, --in case we add support for different games
-	xp INT(11) NULL,
+	xp INT(11) NOT NULL,
 	oppRank INT(11) NULL --to get information about opponent's rank
 );
 
