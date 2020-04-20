@@ -1,0 +1,104 @@
+/*Nav Bar*/
+.nav-area {
+    float: right;
+    list-style: none;
+    margin-top: 30px;
+}
+
+.nav-area li {
+    display: inline-block;
+}
+
+.nav-area li a{
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 20px;
+    font-family: Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+.nav-area li.active a{
+    background: #fff;
+    color: #333;
+}
+
+.nav-area li a:hover{
+    background: #fff;
+    color: #333;
+}
+
+.logo img {
+    width: 100px;
+    float: left;
+    height: auto;
+    padding-top: 20px;
+}
+
+.wrapper {
+    width: 1170px;
+    margin: auto;
+}
+
+/*end nav*/
+
+body {
+    background-color: #11131a;
+}
+
+.tournament-table {
+    height: 100%;
+    padding: 40px 100px 100px;
+    /*overflow-y: scroll;*/
+    /*border: 1px solid pink;*/
+    background-color: #212533;
+}
+
+.friends-table {
+    height: 100%;
+    padding: 40px 100px 100px;
+    /*overflow-y: scroll;*/
+    /*border: 1px solid pink;*/
+    background-color: #212533;
+}
+
+.stats-table {
+    height: 100%;
+    padding: 40px 100px 100px;
+    /*overflow-y: scroll;*/
+    /*border: 1px solid pink;*/
+    background-color: #212533;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.1rem;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #d3d3d3;
+}
+
+.edit {
+    color: white;
+}
+
+.delete {
+    color: red;
+}   
+
+.edit:hover,
+.delete:hover {
+    text-decoration: underline;
+}
+
+.table-heading {
+    color: rgb(205, 223, 240);
+}
+
+.item-text {
+    color: rgb(170, 193, 212);
+}
+
