@@ -28,16 +28,15 @@ public class UserGames {
 				
 				try {
 					//Using prepared statement to see if the username password combination returns a user
-					connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sportsbetting?user=root&password=root");
-					st = connection.prepareStatement("SELECT * FROM games WHERE userID1=? OR userID2=?");
+					connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sportswebsite?user=root&password=root");
+					st = connection.prepareStatement("SELECT * FROM usertobracket WHERE userID=?");
 					st.setInt(1, userID);
-					st.setInt(2, userID);
 					rs = st.executeQuery();
 					
 					if(rs.next()) {
 						System.out.println("List of games user is in: ");
 						do {
-							String gameName = rs.getString("gameName");
+							String gameName = rs.getString("bracketID");
 							System.out.println(gameName);
 						} while(rs.next());
 					}

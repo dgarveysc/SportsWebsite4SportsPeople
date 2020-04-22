@@ -11,7 +11,6 @@ CREATE TABLE Users(
     email VARCHAR(50) NOT NULL,
     points INT(11),
 		elo INT(11),
-    --statsID INT(11) NOT NULL, (not needed b/c stats represent )
     FOREIGN KEY fk3(statsID) REFERENCES Stats(statsID)
 );
 
@@ -89,11 +88,12 @@ CREATE TABLE Bracket (
 	 --assume this table is in chronological order, created when user updates a score
 	 --immediately update
 	statsID INT(11) PRIMARY KEY AUTO_INCREMENT,
-	won BOOLEAN NOT NULL,
+	won BOOLEAN NULL,
 	prize INT(11) NULL,
 	bracketRound INT(11) NOT NULL,
 	gameID INT(11) NULL, --in case we add support for different games
-	xp INT(11) NOT NULL,
+	xp INT(11) NULL,
+	gameDate DATE NULL, --date score is updated on
 	oppRank INT(11) NULL --to get information about opponent's rank
 );
 

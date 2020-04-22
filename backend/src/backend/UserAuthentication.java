@@ -33,7 +33,7 @@ public class UserAuthentication {
 				
 				try {
 					//Using prepared statement to see if the username password combination returns a user
-					connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sportsbetting?user=root&password=root");
+					connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sportswebsite?user=root&password=root");
 					st = connection.prepareStatement("SELECT * FROM users WHERE username=? AND passphrase=?");
 					st.setString(1, username);
 					st.setString(2, password);

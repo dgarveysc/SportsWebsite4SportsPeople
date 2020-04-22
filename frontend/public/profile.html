@@ -1,0 +1,181 @@
+<!Doctype HTML>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="profile.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+        <title>[Website Title] Home</title>
+
+        <style>
+            .profile-header .main-wrapper{
+                padding-top: 125px;
+                width: 1000px;
+                margin: auto;
+            }
+
+            .mt-2 {
+                padding-top: 20px;
+                color:rgb(150, 180, 206);
+            }
+        </style>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+                    var activeTab = $(e.target).text(); // Get the name of active tab
+                    var previousTab = $(e.relatedTarget).text(); // Get the name of previous tab
+                    $(".active-tab span").html(activeTab);
+                    $(".previous-tab span").html(previousTab);
+                });
+            });
+        </script>
+
+    </head>
+    <body>
+        <header class="profile-header">
+            <div class="wrapper">
+                <div class="logo">
+                    <a href="homepage.html">
+                        <img src="images/logo.png" alt="logo">
+                    </a>
+                </div>
+                <ul class="nav-area">
+                    <li><a href="homepage.html">Home</a></li>
+                    <li><a href="createTournament.html">Create Tournament</a></li>
+                    <li class="active"><a href="profile.html">Profile</a></li>
+                    <li><a href="login-sign-up.html">Login/Sign Up</a></li>
+                </ul>
+            </div>
+            <!--Tabs-->
+                <div class="main-wrapper">
+                    <ul id="myTab" class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a href="#tournaments" class="nav-link active" data-toggle="tab" style="color:rgb(149, 159, 180)">My Tournaments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#friends" class="nav-link" data-toggle="tab" style="color:rgb(149, 159, 180)">Friends List</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#stats" class="nav-link" data-toggle="tab" style="color:rgb(149, 159, 180)">Statistics</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="tournaments">
+                            <div class="tournament-table">
+                                <div class="button-group">
+                                    <a href="create.html" class="btn btn-light">Create Tournament</a>
+                                    <a href="index.html" class="btn btn-secondary">Manage Tournaments</a>
+                                </div>
+                                <div class="table-content">
+                                    <h4 class="mt-2">Active Tournaments</h4>
+                                    <form action="" method="post" name="activeform">
+                                    <table>
+                                        <thead>
+                                            <th class="table-heading">Tournament</th>
+                                            <th class="table-heading">Host</th>
+                                            <th class="table-heading" colspan="2">Action</th>
+                                            <th class="table-heading">Input Scores</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="item-text">Tournament1</td>
+                                                <td class="item-text">Hosted by user1234</td>
+                                                <td><a href="#" class="edit">Edit</a></td>
+                                                <td><a href="#" class="delete">Delete</a></td>
+                                                <td><input type="text" name="input-score" size="5"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </form>
+                                </div>
+                                <h4 class="mt-2">Pending Tournaments</h4>
+                                <form action="" method="post" name="pendingform">
+                                    <table>
+                                        <thead>
+                                            <th class="table-heading">Tournament</th>
+                                            <th class="table-heading">Host</th>
+                                            <th class="table-heading" colspan="2">Action</th>
+                                            <th class="table-heading">Vacant Spots</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="item-text">Tournament2</td>
+                                                <td class="item-text">Hosted by user1234</td>
+                                                <td><a href="#" class="edit">Edit</a></td>
+                                                <td><a href="#" class="delete">Delete</a></td>
+                                                <td class="item-text">5</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </form>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="friends">
+                            <div class="friends-table">
+                                <div class="button-group">
+                                    <a href="create.html" class="btn btn-light">Add Friend</a>
+                                    <a href="index.html" class="btn btn-secondary">Manage Friends</a>
+                                </div>
+                                <div class="table-content">
+                            <h4 class="mt-2">Friends</h4>
+                            <!--Editable Table-->
+                            <form action="" method="post" name="activeform">
+                                <table>
+                                    <thead>
+                                        <th class="table-heading">Display Name</th>
+                                        <th class="table-heading">Username</th>
+                                        <th class="table-heading" colspan="2">Action</th>
+                                        <th class="table-heading">Ranking</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-text">Jeffery Miller</td>
+                                            <td class="item-text">csci201</td>
+                                            <td><a href="#" class="edit">Edit</a></td>
+                                            <td><a href="#" class="delete">Delete</a></td>
+                                            <td class="item-text">1234</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                            </div>
+                        </div>
+                            <!--End Editable Table-->
+                        </div>
+                        <div class="tab-pane fade" id="stats">
+                            <div class="stats-table">
+                                <h4 class="mt-2">Stats</h4>
+                                <form action="" method="post" name="activeform">
+                                    <table>
+                                        <thead>
+                                            <th class="table-heading">Tournament</th>
+                                            <th class="table-heading">Host</th>
+                                            <th class="table-heading" colspan="2">Action</th>
+                                            <th class="table-heading">Input Scores</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="item-text">Tournament1</td>
+                                                <td class="item-text">Hosted by user1234</td>
+                                                <td><a href="#" class="edit">Edit</a></td>
+                                                <td><a href="#" class="delete">Delete</a></td>
+                                                <td><input type="text" name="input-score" size="5"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div> <!--tab content div-->
+                    <hr>
+                </div> <!--Main Wrapper-->                   
+              <!--End Tabs-->          
+        </header>
+    </body>
+</html>
