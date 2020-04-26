@@ -28,7 +28,7 @@ String finalWinner="TBD";//final winner
 
 %>
 <div class="wrapper">
-  <div class="item">2
+  <div class="item">
     <div class="item-winner">
       <p><%=finalWinner%></p>
     </div>
