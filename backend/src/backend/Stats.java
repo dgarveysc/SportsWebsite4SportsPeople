@@ -19,11 +19,17 @@ import java.util.Set;
 import java.util.Vector;
 
 
-public class Stats {
+@WebServlet("/Stats")
+public class Stats extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    public Stats() {
+        super();
+    }
 
-
-	public void userHistory(int testID)
-	{
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String testID = request.getAttribute("testID");
+		
 		Connection conn = null;
 		Statement st = null;
 		PreparedStatement ps = null;
@@ -208,12 +214,7 @@ public class Stats {
 				}
 			}
 			//compute averages
-			wRank5 = wRank5 / 5.0;
-			wRank20 = wRank20/20.0;
-			if(numWins != 0)
-			{
-				wRankAll = wRankAll/numWins;
-			}
+
 
 			//do same for losing rank
 			for(int i = oppRkLosses.size()-1; i>= 0; i--)
@@ -232,13 +233,51 @@ public class Stats {
 					lRankAll += curRk;
 				}
 			}
-			lRank5 = lRank5 / 5.0;
-			lRank20 = lRank20/20.0;
+			
+			// logic here is if less games are played than specified, the average reflects that.
+			if(numWins != null && numWins <5 && numWins != 0)
+			{
+				wRank5 = wRank5 / numWins;
+				wRank20 = wRank5 / numWins;
+			}
+			else {
+				wRank5 = wRank5 / 5.0;
+				if(numWins != null && numWins < 20 && numWins != 0)
+				{
+					wRank20 = wRank20 / numWins;				
+				}
+				else {
+					wRank20 = wRank20/20.0;
+				}
+			}
+			
+			if(numWins != 0)
+			{
+				wRankAll = wRankAll / numWins;
+			}
+			
+			
+			// same for Losses
+			if(numLosses != null && numLosses <5 && numLosses != 0)
+			{
+				lRank5 = lRank5 / numLosses;
+				lRank20 = lRank5 / numLosses;
+			}
+			else {
+				lRank5 = lRank5 / 5.0;
+				if(numLosses < 20 && numLosses != null && numLosses != 0)
+				{
+					lRank20 = lRank20 / numLosses;				
+				}
+				else {
+					lRank20 = lRank20/20.0;
+				}
+			}
+			
 			if(numLosses != 0)
 			{
-				lRankAll = lRankAll/numLosses;
+				lRankAll = lRankAll / numLosses;
 			}
-
 
 			Collections.sort(oppRkWins);
 			Collections.sort(oppRkLosses);
@@ -269,9 +308,40 @@ public class Stats {
 				avgOppRank = ((double) sumOppRank) / ((double) numPlayed);
 				avgRound = ((double) sumRounds) / ((double) numPlayed);
 			}
+			
+			request.setAttribute("numPlayed", numPlayed);
+			request.setAttribute("numWins", numWins);
+			request.setAttribute("numLosses", numLosses);
 
+			request.setAttribute("avgOppW5", wRank5);
+			request.setAttribute("avgOppW20", wRank20);
+			request.setAttribute("avgOppWAll", wRankAll);
+			
+			request.setAttribute("avgOppL5", lRank5);
+			request.setAttribute("avgOppL20", lRank20);
+			request.setAttribute("avgOppLAll", lRankAll);
 
+			
+			request.setAttribute("win25", win25);
+			request.setAttribute("win50", win50);
+			request.setAttribute("win75", win75);
+			request.setAttribute("lose25", lose25);
+			request.setAttribute("lose50", lose50);
+			request.setAttribute("lose75", lose75);
+			
+			
+			request.setAttribute("avgOppRank", avgOppRank);
+			request.setAttribute("avgRound", avgRound);
+			request.setAttribute("numBWins", numBWins);
 
+			if(numPlayed != 0)
+			{
+				request.setAttribute("img5", "five"+testID + ".png");
+				request.setAttribute("img20", "twenty"+testID + ".png");
+				request.setAttribute("imgAll", "all"+testID + ".png");
+			}
+		
+			
 		} catch (SQLException sqle) {
 			//however we error handle
 
@@ -296,8 +366,23 @@ public class Stats {
 			} catch (SQLException sqle) {
 				System.out.println("sqle: " + sqle.getMessage());
 			}
+			finally {
+				String nextJSP = "/showStats.jsp";
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+				dispatcher.forward(request,response);
+			}
 		}
 	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+	
+	
+	
+	
+	
 }
 
 class EloDate{
