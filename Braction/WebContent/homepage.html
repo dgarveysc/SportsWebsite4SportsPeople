@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="ISO-8859-1">	
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Braction Home</title>
+		<link rel="stylesheet" href="homepage.css">
+	</head>
+<body>
+	<header class="homepage-header">
+		<div class="wrapper">
+        	<div class="logo">
+				<a href="homepage.html">
+					<img src="logo.png" alt="logo">
+				</a>
+			</div>
+			<div class="nav-area">
+				<a href="homepage.html">
+						<input type="submit" class="button home-button" value="Home" id="active">
+				</a>
+				<a href="createTournament.jsp" >
+					<input type="submit" class="button create-button" value="Create Tournament">
+				</a>
+				<form method="GET" action="brackedIdServlet">
+				<!-- User ID -->
+					<input type="hidden" name="userID" value="1">
+					<a href="profile.jsp">
+						<input type="submit" class="button profile-button" value="Profile">
+					</a>
+				</form>
+				<a href="login-sign-up.jsp">
+					<input type="submit" class="button login-button" value="Login/Sign Up">
+				</a>
+			</div>
+		</div>	
+		<div class="welcome-text">
+			<h1>Bringing the competition to you.</h1>
+			<a href="#">Start Browsing Tournaments</a>
+		</div>
+	</header>
+</body>
+</html>
