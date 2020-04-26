@@ -32,7 +32,7 @@ ax.plot(data, eloList, 'k-')
 ax.set_xlabel('Games Played')
 ax.set_ylabel('Elo')
 
-plt.savefig('C:\\Users\\arico\\Desktop\\all'+str(userID)+'.png', dpi=400, bbox_inches='tight')
+plt.savefig('all'+str(userID)+'.png', dpi=400, bbox_inches='tight')
 
 
 if(len(eloStrList) >=20):  # make sure full graph displays without negative indices
@@ -40,11 +40,11 @@ if(len(eloStrList) >=20):  # make sure full graph displays without negative indi
 
 ax.set_title('ELO over past 20 games')
 ax.set_xlabel('Games Range')
-plt.savefig('C:\\Users\\arico\\Desktop\\twenty'+str(userID)+'.png', dpi=400, bbox_inches='tight')
+plt.savefig('twenty'+str(userID)+'.png', dpi=400, bbox_inches='tight')
 
 ax.set_title('ELO over past 5 games')
 if(len(eloStrList) >= 5):
     ax.set_xlim([len(eloStrList)-5, len(eloStrList)-1])
-plt.savefig('C:\\Users\\arico\\Desktop\\five'+str(userID)+'.png', dpi=400, bbox_inches='tight')
+plt.savefig('five'+str(userID)+'.png', dpi=400, bbox_inches='tight')
 
 print("Success")

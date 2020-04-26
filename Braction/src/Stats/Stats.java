@@ -41,7 +41,7 @@ public class Stats extends HttpServlet {
 		//should count wins, losses, and upcoming!
 
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/lab9?user=root&password=root");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/SportsWebsite?user=root&password=root");
 			st = conn.createStatement();
 
 			//get all statIDs corresponding to a user
