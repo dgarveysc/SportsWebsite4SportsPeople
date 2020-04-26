@@ -336,40 +336,7 @@ public class JDBCBracketStuff {
 		return bracketID;
 	}
 	
-	public static Bracket getBracket(int bracketID) {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		Bracket b = null;
-		List<UserToStats> lst = new ArrayList<>(15);
-		try {
-			StringBuilder sb = new StringBuilder("bracketS1");
-			for (int i = 2; i <= 15; i++) {
-				sb.append(String.format(", bracketS%d", i));
-			}
-			String query = String.format("SELECT %s FROM Bracket WHERE bracketID=?", sb.toString());
-			System.out.printf("Executing Query: %s\n", query);
-			ps = conn.prepareStatement("SELECT userID FROM UserToGameStats WHERE userToGameStatsID=?");
-			ps.setString(1, Integer.toString(userToStatsID));
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				userID = Integer.parseInt(rs.getString(1));
-			} 
-		} catch (SQLException sqle) {
-			System.out.println ("SQLException: " + sqle.getMessage());
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (ps != null) {
-					ps.close();
-				}
-			} catch (SQLException sqle) {
-				System.out.println("sqle: " + sqle.getMessage());
-			}
-		}
-		return userID;
-	}
+	
 	
 	public static boolean userInBracket(int userID, int bracketID) {
 		PreparedStatement ps = null;
