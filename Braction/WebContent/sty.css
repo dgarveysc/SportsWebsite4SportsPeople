@@ -1,0 +1,161 @@
+.nav-area {
+    float: right;
+    list-style: none;
+    margin-top: 2%;
+    margin-right: 2%;
+    display: inline-flex;
+}
+.nav-area li {
+    display: inline-block;
+}
+.nav-area a{
+    color: #fff;
+    /*text-decoration: none;*/
+    /*padding: 5px 20px;*/
+    font-family: Helvetica, sans-serif;
+    /*font-size: 16px;*/
+}
+
+#active {
+	color: #000000;
+	background: #ffffff;
+}
+
+/*Nav Bar*/
+.button {
+	background-color: #000000;
+	color: #ffffff;
+    font-size: 1em;
+    border: none;
+    padding: 1em;
+}
+.button:hover {
+	color: #000000;
+	background: #ffffff;
+	cursor: pointer;
+}
+.button a {
+	text-decoration: none;
+}
+
+
+.logo img {
+    width: 15%;
+    float: left;
+    height: 20%;
+    background-color: #ffffff;
+    /*padding-top: 10px;*/
+}
+
+.container {
+    width: 1170px;
+    margin: auto;
+}
+/*end nav*/
+body {
+    background-color: #11131a;
+}
+
+.main{
+    border-top: 1px solid white;
+    background-color: #212533;
+}
+
+.text{
+    padding-top: 5%;
+    color: #fff;
+}
+
+.loginError{
+    color: red;
+    font-size: 150%;
+}
+
+.header{
+    color: rgb(170, 193, 212);
+    font-size: 50px;
+}
+
+.item-text {
+    margin-top: 3%;
+    color: rgb(205, 223, 240);
+    font-size: 25px;
+    margin-bottom: 0;
+}
+
+.small-item-text{
+    color: rgb(205, 223, 240);
+    font-size: medium;
+    margin-bottom: 0;
+}
+
+.text-inpt{
+    border: .5px solid white;
+    background-color: #11131a;
+    border-radius: 6px;
+    color: white;
+    width: 50%;
+    outline: none;
+}
+
+.text-inpt:focus{
+    border: 3px solid white;
+}
+
+.break{
+    height:1px;
+    border:none; 
+    color: white; 
+    background-color: white; 
+    width: 80%; 
+    text-align:left; 
+    margin: 1% 0 5% 0;
+}
+
+.whole-break{
+    height:1px;
+    border:none; 
+    color: white; 
+    background-color: white; 
+    width: 100%; 
+    text-align:left; 
+    margin: 5% 0 5% 0;
+}
+
+.sub{
+    background-color: rgb(205, 223, 240); 
+    padding-top: 1%;
+    padding-bottom: 1%;
+    width: 50%;
+    border-radius: 6px;
+    color: #11131a;
+    outline: none;
+}
+
+#code{
+    margin-top: 10px;
+    color: white;
+}
+
+/*
+ Adapted from https://www.filamentgroup.com/lab/select-css.html, Author: Scott Jehl 
+*/
+.dropdown {
+    outline: none;
+	display: block;
+	font-size: 16px;
+	font-weight: 700;
+	color: rgb(205, 223, 240);
+	line-height: 1.3;
+	padding: .6em 1.4em .5em .8em;
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+	margin: 0;
+	border: 1px solid white;
+	box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+	border-radius: .5em;
+	background-color: #11131a;
+	background-repeat: no-repeat, repeat;
+	background-position: right .7em top 50%, 0 0;
+}

@@ -1,0 +1,178 @@
+@charset "ISO-8859-1";
+
+/* Statistics */
+
+/*#random-stats-row, #totals-row, #graph-row {
+	margin-left: 1%;
+	margin-bottom: 5%;
+}
+
+#other-stats-row {
+	margin-left: 1%;
+}*/
+
+
+.add-form {
+	padding-top: 2%;
+    display: flex;
+    width: 50%;
+}
+
+#totalCol {
+	align-self: center;
+	padding-bottom: 5%;
+}
+
+#piechart {
+	display: inline-block;
+	margin: 0 auto;
+}
+
+.stats-table p {
+	display: inline-block;
+	margin-bottom: 0rem;
+}
+
+.stat-heading {
+	font-size: 1em;
+	color:#d9e3fd;
+}
+
+.stat {
+	font-size: 1em;
+	color: #db0052;
+	text-align: left;
+}
+
+#graph-row {
+	margin-bottom: 3%;
+	margin-top: 5%;
+}
+
+.graph {
+	width: 90%;
+	margin-top: 5%;
+	/*margin: 5%;*/
+}
+
+.graph-heading {
+	font-size: 1em;
+	color: aliceblue;
+	/*margin-left: 5%;*/
+}
+
+/*Nav Bar*/
+.button {
+	background-color: #000000;
+	color: #ffffff;
+    font-size: 1em;
+    border: none;
+    padding: 1em;
+}
+
+.button:hover {
+	color: #000000;
+	background: #ffffff;
+	cursor: pointer;
+}
+
+.button a {
+	text-decoration: none;
+}
+
+#active {
+	color: #000000;
+	background: #ffffff;
+}
+
+.nav-area {
+    float: right;
+    list-style: none;
+    margin-top: 2%;
+    margin-right: 2%;
+    display: inline-flex;
+}
+
+.nav-area li {
+    display: inline-block;
+}
+
+.nav-area a{
+    color: #fff;
+    /*text-decoration: none;*/
+    /*padding: 5px 20px;*/
+    font-family: Helvetica, sans-serif;
+    /*font-size: 16px;*/
+}
+
+.logo img {
+    width: 15%;
+    float: left;
+    height: 20%;
+    background-color: #ffffff;
+    /*padding-top: 10px;*/
+}
+
+/*end nav*/
+
+body {
+    background-color: #11131a;
+}
+
+.tournament-table {
+    height: 100%;
+    padding: 5% 10% 10% 10%;
+    /*overflow-y: scroll;*/
+    /*border: 1px solid pink;*/
+    background-color: #212533;
+}
+
+.friends-table {
+    height: 100%;
+    padding: 5% 10% 10% 10%;
+    /*overflow-y: scroll;*/
+    /*border: 1px solid pink;*/
+    background-color: #212533;
+}
+
+.stats-table {
+    height: 100%;
+    padding: 5% 10% 10% 10%;
+    /*overflow-y: scroll;*/
+    /*border: 1px solid pink;*/
+    background-color: #212533;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.1rem;
+}
+
+th, td {
+    padding: 2%;
+    text-align: left;
+    border-bottom: 1px solid #d3d3d3;
+}
+
+.edit {
+    color: white;
+}
+
+.delete {
+    color: red;
+}   
+
+.edit:hover,
+.delete:hover {
+    text-decoration: underline;
+}
+
+.table-heading {
+    color: rgb(205, 223, 240);
+}
+
+.item-text {
+    color: rgb(170, 193, 212);
+}
+
