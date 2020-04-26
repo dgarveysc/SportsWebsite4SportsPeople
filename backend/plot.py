@@ -7,7 +7,7 @@ import sys
 
 # get ID from command line and
 userID = sys.argv[1]
-file = open('C:\\Users\\arico\\Documents\\GitHub\\SportsWebsite4SportsPeople\\backend\\' + userID + ".txt", "r")
+file = open(userID + ".txt", "r")
 
 # process file, split it, then create boundaries
 yee = file.read()

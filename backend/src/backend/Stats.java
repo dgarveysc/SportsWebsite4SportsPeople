@@ -35,6 +35,7 @@ public class Stats extends HttpServlet {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		ResultSet rs2 = null;
+
 		Set<Integer> statIDs = null;
 
 		//should count wins, losses, and upcoming!
@@ -53,8 +54,8 @@ public class Stats extends HttpServlet {
 				//ASSUME statID always exists
 				statIDs.add(rs.getInt("statsID"));
 			}
-
-
+			
+			
 			//get table of all statsID for user
 			rs2 = st.executeQuery("SELECT * FROM Stats"
 					+ " WHERE won IS NOT NULL");
@@ -333,6 +334,8 @@ public class Stats extends HttpServlet {
 			request.setAttribute("avgOppRank", avgOppRank);
 			request.setAttribute("avgRound", avgRound);
 			request.setAttribute("numBWins", numBWins);
+			request.setAttribute("elo", curElo);
+
 
 			if(numPlayed != 0)
 			{
