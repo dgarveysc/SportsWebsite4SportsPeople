@@ -83,7 +83,7 @@
 
                 <div class="logo">
                     <a href="homepage.html">
-                        <img src="images/logo.png" alt="logo">
+                        <img src="logo.png" alt="logo">
                     </a>
                 </div>
             </div>
