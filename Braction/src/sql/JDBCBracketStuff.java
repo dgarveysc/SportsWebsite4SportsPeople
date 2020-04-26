@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bracket.Bracket;
+import bracket.User;
 import bracket.UserToStats;
 
 public class JDBCBracketStuff {
@@ -22,8 +23,29 @@ public class JDBCBracketStuff {
 
     private static final String DATA_FOR_RANDOM_STRING = CHAR_LOWER + CHAR_UPPER + NUMBER;
     private static SecureRandom random = new SecureRandom();
+    
+    public static final String CONNECTION_STRING = "jdbc:mysql://localhost/SportsWebsite?user=root&password=root";
+    
+    public static void initConnection() {
+		if (conn != null) {
+			System.out.println("[WARN] Connection has already been established");
+		} else {
+			try {
+				System.out.println("connection established");
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				conn = DriverManager.getConnection(CONNECTION_STRING);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	private static int createStats(int bracketRound) {
+		if (conn == null) {
+			JDBCBracketStuff.initConnection();
+		}
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int statsID = -1;
@@ -58,6 +80,7 @@ public class JDBCBracketStuff {
 	}
 	
 	public static String generateRandomString(int length) {
+		
         if (length < 1) throw new IllegalArgumentException();
 
         StringBuilder sb = new StringBuilder(length);
@@ -79,6 +102,9 @@ public class JDBCBracketStuff {
     }
 	
 	private static String generateBracketCode() {
+		if (conn == null) {
+			JDBCBracketStuff.initConnection();
+		}
 		boolean success = false;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -115,6 +141,9 @@ public class JDBCBracketStuff {
 	}
 	
 	private static int addToUserToStats(int userID, int round) {
+		if (conn == null) {
+			JDBCBracketStuff.initConnection();
+		}
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int userToStatsID = -1;
@@ -153,25 +182,53 @@ public class JDBCBracketStuff {
 		return userToStatsID;
 	}
 	
-	public static BracketIdCodePair createBracket(int userID, String bracketName, int gameType) {
+	private static boolean userExists(int userID) {
+		if (conn == null) {
+			JDBCBracketStuff.initConnection();
+		}
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		boolean success = false;
 		try {
-			
-			// rs = st.executeQuery("SELECT * from Student where fname='" + name + "'");
 			ps = conn.prepareStatement("SELECT userID, username FROM Users WHERE userID=?");
 			ps.setString(1, Integer.toString(userID));
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				System.out.printf("Valid user found of name %s and userID %s\n", rs.getString("username"), rs.getString("userID"));
+				success = true;
 			} else {
 				System.out.printf("User with id %s not found!\n", userID);
-				return null;
 			}
 			System.out.println("------");
-			rs.close();
-			ps.close();
-
+		} catch (SQLException sqle) {
+			System.out.println ("SQLException: " + sqle.getMessage());
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+		return success;
+	}
+	
+	public static BracketIdCodePair createBracket(int userID, String bracketName, int gameType) {
+		if (conn == null) {
+			JDBCBracketStuff.initConnection();
+		}
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		BracketIdCodePair b = null;
+		if (!userExists(userID)) {
+			return null;
+		}
+		try {
+			
 			int userToStatsID = addToUserToStats(userID, 1);
 
 			String randomS = generateBracketCode();
@@ -187,17 +244,13 @@ public class JDBCBracketStuff {
 			if (rs.next()) {
 				bracketID = rs.getInt(1);
 				System.out.printf("pk of bracket is %d\n", bracketID);
+				connectUserToBracket(userID, bracketID);
 			}
 			
-			
-			
-			
-			BracketIdCodePair b = new BracketIdCodePair(bracketID, randomS);
-			return b;
+			b = new BracketIdCodePair(bracketID, randomS);
 			
 		} catch (SQLException sqle) {
 			System.out.println ("SQLException: " + sqle.getMessage());
-			return null;
 		} finally {
 			try {
 				if (rs != null) {
@@ -210,9 +263,13 @@ public class JDBCBracketStuff {
 				System.out.println("sqle: " + sqle.getMessage());
 			}
 		}
+		return b;
 	}
 	
 	private static int addUserToBracket(int userID, int bracketID) {
+		if (conn == null) {
+			JDBCBracketStuff.initConnection();
+		}
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int success = -1;
@@ -247,9 +304,6 @@ public class JDBCBracketStuff {
 					System.out.printf("problem");
 				}
 				System.out.println("------");
-	
-				
-				
 			} catch (SQLException sqle) {
 				System.out.println ("SQLException: " + sqle.getMessage());
 			} finally {
@@ -271,6 +325,9 @@ public class JDBCBracketStuff {
 	}
 	
 	private static void connectUserToBracket(int userID, int bracketID) {
+		if (conn == null) {
+			JDBCBracketStuff.initConnection();
+		}
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
@@ -294,10 +351,23 @@ public class JDBCBracketStuff {
 		}
 	}
 	
+	/**
+	 * @param userID the userID of the user add
+	 * @param bracketCode the code the bracket to add
+	 * @return adds a user to a bracket given a bracket code. returns -1 if some unknown error
+	 * occurs and returns -2 if the user is already in the bracket and returns -3 if the user does not
+	 * exist. otherwise returns the bracketID of the brackets the user was added to
+	 */
 	public static int addUserToBracket(int userID, String bracketCode) {
+		if (conn == null) {
+			JDBCBracketStuff.initConnection();
+		}
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int bracketID = -1;
+		if (!userExists(userID)) {
+			return -3;
+		}
 		try {
 			// rs = st.executeQuery("SELECT * from Student where fname='" + name + "'");
 			ps = conn.prepareStatement("SELECT bracketID FROM Bracket WHERE bracketCode=?");
@@ -336,9 +406,153 @@ public class JDBCBracketStuff {
 		return bracketID;
 	}
 	
+	/**
+	 * @param statsID
+	 * @return -1 if the game has not been played yet, otherwise 1 represents win and 0 represents 
+	 * loss
+	 */
+	private static int didWin(int statsID) {
+		if (conn == null) {
+			JDBCBracketStuff.initConnection();
+		}
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int win = -1;
+		try {
+			ps = conn.prepareStatement("SELECT won FROM Stats WHERE statsID=?");
+			ps.setString(1, Integer.toString(statsID));
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				String won = rs.getString(1);
+				if (won != null)
+					win = (won.equalsIgnoreCase("true")) ? 1 : 0;
+			} 
+		} catch (SQLException sqle) {
+			System.out.println ("SQLException: " + sqle.getMessage());
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+		return win;
+	}
 	
+	private static User getUser(int userID) {
+		if (conn == null) {
+			JDBCBracketStuff.initConnection();
+		}
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		User u = null;
+		try {
+			ps = conn.prepareStatement("SELECT username FROM Users WHERE userID=?");
+			ps.setString(1, Integer.toString(userID));
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				u = new User(userID, rs.getString(1));				
+			} 
+		} catch (SQLException sqle) {
+			System.out.println ("SQLException: " + sqle.getMessage());
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+		return u;
+	}
+	
+	private static UserToStats getUserToStats(String userToStatsID) {
+		if (conn == null) {
+			JDBCBracketStuff.initConnection();
+		}
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		UserToStats u = null;
+		try {
+			ps = conn.prepareStatement("SELECT userID, statsID FROM UserToStats WHERE userToStatsID=?");
+			ps.setString(1, userToStatsID);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				int userID = Integer.parseInt(rs.getString(1));
+				int statsID = Integer.parseInt(rs.getString(2));
+				rs.close();
+				ps.close();
+				u = new UserToStats(getUser(userID), didWin(statsID));
+			} 
+		} catch (SQLException sqle) {
+			System.out.println ("SQLException: " + sqle.getMessage());
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+		return u;
+	}
+	
+	public static Bracket getBracket(int bracketID) {
+		if (conn == null) {
+			JDBCBracketStuff.initConnection();
+		}
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<UserToStats> lst = new ArrayList<>();
+		try {
+			StringBuilder sb = new StringBuilder("bracketS1");
+			for (int i = 2; i <= 15; i++) {
+				sb.append(String.format(", bracketS%d", i));
+			}
+			String query = String.format("SELECT %s FROM Bracket WHERE bracketID=?", sb.toString());
+			System.out.printf("Executing Query: %s\n", query);
+			ps = conn.prepareStatement(query);
+			ps.setString(1, Integer.toString(bracketID));
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				for (int i = 0; i < 15; i++) {
+					lst.add(getUserToStats(rs.getString(i+1)));
+				}
+			} 
+		} catch (SQLException sqle) {
+			System.out.println ("SQLException: " + sqle.getMessage());
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+		return new Bracket(lst);
+	}
 	
 	public static boolean userInBracket(int userID, int bracketID) {
+		if (conn == null) {
+			JDBCBracketStuff.initConnection();
+		}
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		boolean isIn = false;
@@ -368,6 +582,9 @@ public class JDBCBracketStuff {
 	}
 	
 	private static int userIDofUserToStats(int userToStatsID) {
+		if (conn == null) {
+			JDBCBracketStuff.initConnection();
+		}
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int userID = -1;
@@ -396,6 +613,9 @@ public class JDBCBracketStuff {
 	}
 	
 	private static int getRound(int statsID) {
+		if (conn == null) {
+			JDBCBracketStuff.initConnection();
+		}
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int bracketRound = -1;
@@ -423,8 +643,18 @@ public class JDBCBracketStuff {
 		return bracketRound;
 	}
 	
-	
+	/**
+	 * 
+	 * @param slot1 the slot number of one player
+	 * @param slot2 the slot number of the opponent
+	 * @param slot1Won whether the player in slot1 won or lost
+	 * @param bracketID the bracket ID in which this update is happening
+	 * @return returns true if the update success, and false if it does not
+	 */
 	public static boolean update(int slot1, int slot2, boolean slot1Won, int bracketID) {
+		if (conn == null) {
+			JDBCBracketStuff.initConnection();
+		}
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		boolean success = false;
@@ -432,6 +662,7 @@ public class JDBCBracketStuff {
 			if (Math.abs(slot1-slot2) > 1) {
 				success = false;
 			} else {
+				int newSlot = Math.min(slot1, slot2)/2;
 				// rs = st.executeQuery("SELECT * from Student where fname='" + name + "'");
 				ps = conn.prepareStatement("SELECT bracketS?, bracketS? FROM Bracket WHERE bracketID=?");
 				ps.setString(1, Integer.toString(slot1));
@@ -450,8 +681,9 @@ public class JDBCBracketStuff {
 				System.out.println("------");
 				rs.close();
 				ps.close();
-	
-				int newSlot = Math.min(slot1, slot2)/2;
+				
+				// CALL ADD OPPONENT
+				// CALL GENERAL STATS FUNCTION
 				
 				int round = (newSlot == 1) ? 3 : 2;
 				int userID = userIDofUserToStats(winnerID);
@@ -490,8 +722,12 @@ public class JDBCBracketStuff {
 			System.out.println("bracketCreated");
 			int godGamerID = 1;
 			int bobTheIdiotID = 2;
-			JDBCBracketStuff.addUserToBracket(godGamerID, b.getBracketCode());
-			System.out.println("bob added");
+			int result = JDBCBracketStuff.addUserToBracket(godGamerID, b.getBracketCode());
+			System.out.printf("result from readding godGamer was %d\n", result);
+			result = JDBCBracketStuff.addUserToBracket(bobTheIdiotID, b.getBracketCode());
+			System.out.printf("result from adding bob was %d\n", result);
+			boolean result2 = JDBCBracketStuff.update(8, 9, true, b.getBracketID());
+			System.out.printf("updated with result %b\n", result2);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
