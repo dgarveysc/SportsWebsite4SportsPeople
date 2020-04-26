@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Tournament bracket</title>
+<title>Tournament Bracket</title>
 	<link rel="stylesheet" href="bracketPage.css">
 </head>
 <body>
