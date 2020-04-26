@@ -8,7 +8,7 @@ USE SportsWebsite;
 	statsID INT(11) PRIMARY KEY AUTO_INCREMENT,
 	won BOOLEAN NULL,
 	prize INT(11) NULL,
-	bracketRound INT(11) NOT NULL,
+	bracketRound INT(11) NULL,
 	gameID INT(11) NULL, -- in case we add support for different games
 	xp INT(11) NULL,
 	gameDate DATE NULL, -- date score is updated on
