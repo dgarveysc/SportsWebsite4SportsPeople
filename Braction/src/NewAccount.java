@@ -100,21 +100,6 @@ public class NewAccount extends HttpServlet {
 			}
 			
 		}
-		/*else {
-			*if(email.contains("@")) {
-				//Password doesn't match confirmed password
-				request.setAttribute("confpassError", "\tPlease make sure that the passwords match.");
-			}
-			else {
-				//Password doesn't match confirmed password
-				request.setAttribute("signUpError", "\tPlease enter a valid email address.");
-			}
-			
-			//Send dispatch
-			RequestDispatcher dispatch = getServletContext().getRequestDispatcher(next);
-			dispatch.forward(request, response);
-			out.println("<p>Error occurred when trying to create account</p>");
-		}*/
 	}
 ​
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
