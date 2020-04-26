@@ -72,7 +72,7 @@
         }
         String emailTaken = request.getParameter("signUpError");
         if(emailTaken == null){
-            emailTaken == "";
+            emailTaken = "";
         }
     %>
     <div class="container">
