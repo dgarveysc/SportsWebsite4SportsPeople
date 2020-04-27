@@ -24,7 +24,7 @@
             }
             // Using jQuery 
             $.ajax({
-                url: 'Login',
+                url: "Login",
                 data: {
                     uname: document.localSI.Username.value,
                     pword: document.localSI.Password.value
@@ -34,7 +34,7 @@
                 	$( "#badLogin" ).html(result);
                 }
             });
-            return true;
+            return false;
         }
 
         function createNewUser() {
@@ -52,8 +52,11 @@
                     cpword: document.localSU.confirmPass.value,
                     natAndc: document.localSU.natAndc.value
                 },
+                success: function(result){
+                	$( "#loginTaken").html(result);
+                }
             });
-            return true;
+            return false;
 
         }
 
@@ -62,29 +65,17 @@
 </head>
 
 <body>
+
     <% 
-    	String incorrectLogin = (String)request.getAttribute("loginError");
-    	if(incorrectLogin == null){
-    		incorrectLogin = "";
-    	}
-    	
-        String emailTaken = (String)request.getAttribute("signUpError");
-        if(emailTaken == null){
-            emailTaken = "";
-        }
-        String test = "test";
-    %>
-    <% 
-		boolean loggedIn = false;
+		
 		HttpSession s = request.getSession();
 		
 		String username = (String)s.getAttribute("username");
 		if(username != null){
-			loggedIn = true;
+			RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/profile.jsp");
+			dispatch.forward(request, response);
 		}
-		RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/profile.jsp");
-		dispatch.forward(request, response);
-	
+		
 	%>
     <div class="container">
         <div class="row">
@@ -125,7 +116,7 @@
                     </h1>
                     <hr class="break">
                     <div class="loginError" id="badLogin">
-                        <%= incorrectLogin + test %>
+                        
                     </div>
                     <p class="item-text">
                         Username
@@ -147,7 +138,9 @@
                         Sign up for a new account!
                     </h1>
                     <hr class="break" width="100%">
-                    <div class="loginError"> <%=  emailTaken + test %></div>
+                    <div class="loginError" id="loginTaken"> 
+                    
+                    </div>
                     <p class="item-text">
                         Email
                     </p>

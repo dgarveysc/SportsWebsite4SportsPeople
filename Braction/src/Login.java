@@ -35,9 +35,11 @@ public class Login extends HttpServlet {
 					st.setString(2, password);
 					rs = st.executeQuery();
 					if(rs.next()) {
+						int userID = Integer.parseInt(rs.getString(1));
                         // Using sessions 
                         HttpSession session = request.getSession();
                         session.setAttribute("username", username);
+                        session.setAttribute("userID", userID); System.out.println(userID);
                         next = "/profile.jsp";
                         
                         
@@ -50,14 +52,14 @@ public class Login extends HttpServlet {
 					}
 					else {
 						System.out.println("b");
-						out.println("Username and password combination is not registered.");
+						out.println("<div>Username and password combination is not registered.</div>");
 						//If username and password aren't in database, throw an error
 						//request.setAttribute("loginError", "Username and password combination is not registered.");
-						next = "/login-sign-up.jsp";
+						//next = "/login-sign-up.jsp";
 						
 						//Send dispatch
-						RequestDispatcher dispatch = getServletContext().getRequestDispatcher(next);
-						dispatch.forward(request, response);
+						//RequestDispatcher dispatch = getServletContext().getRequestDispatcher(next);
+						//dispatch.forward(request, response);
 					}
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();

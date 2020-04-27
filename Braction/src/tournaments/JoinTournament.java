@@ -38,7 +38,7 @@ public class JoinTournament extends HttpServlet {
 		boolean success = true;
 		String code = request.getParameter("tournamentID");
 		try {
-			userID = Integer.parseInt((String)session.getAttribute("userID"));
+			userID = (Integer)session.getAttribute("userID");
 		} catch (NumberFormatException | NullPointerException e) {
 			success = false;
 		}
@@ -50,9 +50,9 @@ public class JoinTournament extends HttpServlet {
 		}
 		String message = "";
 		if (bracketID == -1) {
-			message ="an error occured!";
+			message ="An error occured!";
 		} else if (bracketID == -2) {
-			message = "you are already in this tournament!";
+			message = "You are already in this tournament!";
 		} else if (bracketID >= 0) {
 			message = Integer.toString(bracketID);
 		}
