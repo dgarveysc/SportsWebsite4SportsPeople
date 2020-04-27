@@ -1,4 +1,4 @@
-<%@ page language="Java" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 
@@ -8,12 +8,13 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Login/Sign-Up</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="sty.css">
     <script>
         function authenticateUser() {
@@ -29,12 +30,11 @@
                     pword: document.localSI.Password.value
                 },
                 //Making the tournament ID code show up on screen
-                success: function (result) {
-                    $("#lsipe").html(result);
+                success: function(result){
+                	$( "#badLogin" ).html(result);
                 }
-
             });
-            return false;
+            return true;
         }
 
         function createNewUser() {
@@ -48,15 +48,12 @@
                 data: {
                     email: document.localSU.email.value,
                     uname: document.localSU.username.value,
-                    pword: document.localSU.password.value
+                    pword: document.localSU.password.value,
+                    cpword: document.localSU.confirmPass.value,
+                    natAndc: document.localSU.natAndc.value
                 },
-                //Making the tournament ID code show up on screen
-                success: function (result) {
-                    $("#nisee").html(result);
-                }
-
             });
-            return false;
+            return true;
 
         }
 
@@ -66,15 +63,29 @@
 
 <body>
     <% 
-        String error = request.getParameter("loginError");
-        if(error == null){
-            error = "";
-        }
-        String emailTaken = request.getParameter("signUpError");
+    	String incorrectLogin = (String)request.getAttribute("loginError");
+    	if(incorrectLogin == null){
+    		incorrectLogin = "";
+    	}
+    	
+        String emailTaken = (String)request.getAttribute("signUpError");
         if(emailTaken == null){
             emailTaken = "";
         }
+        String test = "test";
     %>
+    <% 
+		boolean loggedIn = false;
+		HttpSession s = request.getSession();
+		
+		String username = (String)s.getAttribute("username");
+		if(username != null){
+			loggedIn = true;
+		}
+		RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/profile.jsp");
+		dispatch.forward(request, response);
+	
+	%>
     <div class="container">
         <div class="row">
 
@@ -90,20 +101,14 @@
             <div class="col">
 
                 <div class="nav-area">
-                    <a href="homepage.html">
+                    <a href="index.jsp">
                         <input type="submit" class="button home-button" value="Home" id="active">
                     </a>
-                    <a href="createTournament.html">
+                    <a href="createTournament.jsp">
                         <input type="submit" class="button create-button" value="Create Tournament">
                     </a>
-                    <form method="GET" action="brackedIdServlet">
-                        <!-- User ID -->
-                        <input type="hidden" name="userID" value="1">
-                        <a href="profile.jsp">
-                            <input type="submit" class="button profile-button" value="Profile">
-                        </a>
-                    </form>
-                    <a href="login-sign-up.jsp">
+                
+                    <a href="#">
                         <input type="submit" class="button login-button" value="Login/Sign Up">
                     </a>
                 </div>
@@ -119,8 +124,8 @@
                         Login to existing account...
                     </h1>
                     <hr class="break">
-                    <div class="loginError">
-                        <%= error %>
+                    <div class="loginError" id="badLogin">
+                        <%= incorrectLogin + test %>
                     </div>
                     <p class="item-text">
                         Username
@@ -142,11 +147,12 @@
                         Sign up for a new account!
                     </h1>
                     <hr class="break" width="100%">
+                    <div class="loginError"> <%=  emailTaken + test %></div>
                     <p class="item-text">
                         Email
                     </p>
                     <input onfocus="removeError(this.id)" class="text-inpt" type="email" id="nsie" name="email">
-                    <div class="error" id="nsiee"><%=  emailTaken %></div>
+                    <div class="error" id="nsiee"></div>
                     <p class="item-text">
                         Username
                     </p>

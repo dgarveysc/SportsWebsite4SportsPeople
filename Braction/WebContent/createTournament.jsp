@@ -1,4 +1,4 @@
-<%@ page language="Java" %>
+<%@ page language="Java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <!DOCTYPE html>
 <html>
@@ -65,6 +65,21 @@
 </head>
 
 <body>
+<% 
+		boolean loggedIn = false;
+		HttpSession s = request.getSession();
+		
+		String username = (String)s.getAttribute("username");
+		if(username != null){
+			loggedIn = true;
+		}
+
+		String profile = "";
+		if(loggedIn){
+			profile = "<form method=\"GET\" action=\"brackedIdServlet\"> <!-- User ID --> <input type=\"hidden\" name=\"userID\" value=\"1\"><a href=\"profile.jsp\"><input type=\"submit\" class=\"button profile-button\" value=\"Profile\"></a></form>";
+		}
+	
+	%>
     <div class="container">
         <div class="row">
 
@@ -79,19 +94,16 @@
             </div>
             <div class="col">
                 <div class="nav-area">
-                    <a href="homepage.html">
+                    <a href="index.jsp">
                             <input type="submit" class="button home-button" value="Home" id="active">
                     </a>
-                    <a href="createTournament.jsp" >
+                    <a href="#" >
                         <input type="submit" class="button create-button" value="Create Tournament">
                     </a>
-                    <form method="GET" action="brackedIdServlet">
-                    <!-- User ID -->
-                        <input type="hidden" name="userID" value="1">
-                        <a href="profile.jsp">
-                            <input type="submit" class="button profile-button" value="Profile">
-                        </a>
-                    </form>
+                    <div>
+					<%= profile %>
+				
+					</div>
                     <a href="login-sign-up.jsp">
                         <input type="submit" class="button login-button" value="Login/Sign Up">
                     </a>
