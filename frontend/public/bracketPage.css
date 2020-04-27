@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 body {
-  background-color: #76448A  ;
+  background-color: #212533;
   font: uni sans heavy;
 }
 
@@ -15,11 +15,13 @@ body {
 .item {
   display: flex;
   flex-direction: row-reverse;
+  
 }
 .item p {
   padding: 12px;
   margin: 0;
-  background-color: #BFC9CA;
+  color: #212533;
+  background-color: rgb(205, 223, 240);
 }
 .item-winner {
   position: relative;

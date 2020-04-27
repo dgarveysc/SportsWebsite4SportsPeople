@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,29 +8,48 @@
 	<link rel="stylesheet" href="bracketPage.css">
 </head>
 <body>
+<%
+String playerOne="TBD";
+String playerTwo="TBD";
+String playerThree="TBD";
+String playerFour="TBD";
+String playerFive="TBD";
+String playerSix="TBD";
+String playerSeven="TBD";
+String playerEight="TBD";
+String roundTwoOne="TBD";//first winner of round two
+String roundTwoTwo="TBD";
+String roundTwoThree="TBD";
+String roundTwoFour="TBD";
+String roundThreeOne="TBD";//first winner of round three
+String roundThreeTwo="TBD";
+String finalWinner="TBD";//final winner
+//UPDATE THESE VARIABLES
+
+%>
 <div class="wrapper">
   <div class="item">
     <div class="item-winner">
-      <p>Player C</p>
+      <p><%=finalWinner%></p>
     </div>
     <div class="item-players">
       <div class="item-player">
         <div class="item">
           <div class="item-winner">
-            <p>Player C</p>
+            <p><%=roundThreeOne %></p>
           </div>
           <div class="item-players">
             <div class="item-player">
               <div class="item">
                 <div class="item-winner">
-                  <p>Player A</p>
+                  <p><%=roundTwoOne %></p>
                 </div>
                 <div class="item-players">
                   <div class="item-player">
-                    <p>Player A</p>
+                    <p><%=playerOne %></p>
                   </div>
                   <div class="item-player">
-                    <p>Player B</p>
+                    <p><%=playerTwo %></p>
                   </div>
                 </div>
               </div>
@@ -36,14 +57,14 @@
             <div class="item-player">
               <div class="item">
                 <div class="item-winner">
-                  <p>Player C</p>
+                  <p><%=roundTwoTwo %></p>
                 </div>
                 <div class="item-players">
                   <div class="item-player">
-                    <p>Player C</p>
+                    <p><%=playerThree %></p>
                   </div>
                   <div class="item-player">
-                    <p>Player D</p>
+                    <p><%=playerFour %></p>
                   </div>
                 </div>
               </div>
@@ -55,20 +76,20 @@
       <div class="item-player">
         <div class="item">
           <div class="item-winner">
-            <p>Player F</p>
+            <p><%=roundThreeTwo%></p>
           </div>
           <div class="item-players">
             <div class="item-player">
               <div class="item">
                 <div class="item-winner">
-                  <p>Player F</p>
+                  <p><%=roundTwoThree %></p>
                 </div>
                 <div class="item-players">
                   <div class="item-player">
-                    <p>Player E</p>
+                    <p><%=playerFive %></p>
                   </div>
                   <div class="item-player">
-                    <p>Player F</p>
+                    <p><%=playerSix %></p>
                   </div>
                 </div>
               </div>
@@ -76,14 +97,14 @@
             <div class="item-player">
               <div class="item">
                 <div class="item-winner">
-                  <p>Player H</p>
+                  <p><%=roundTwoFour %></p>
                 </div>
                 <div class="item-players">
                   <div class="item-player">
-                    <p>Player G</p>
+                    <p><%=playerSeven %></p>
                   </div>
                   <div class="item-player">
-                    <p>Player H</p>
+                    <p><%=playerEight %></p>
                   </div>
                 </div>
               </div>

@@ -18,6 +18,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 
 @WebServlet("/Stats")
 public class Stats extends HttpServlet {
@@ -28,7 +35,7 @@ public class Stats extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String testID = request.getAttribute("testID");
+		String testID = (String) request.getAttribute("testID");
 		
 		Connection conn = null;
 		Statement st = null;
@@ -41,7 +48,7 @@ public class Stats extends HttpServlet {
 		//should count wins, losses, and upcoming!
 
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/lab9?user=root&password=root");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/SportsWebsite?user=root&password=root");
 			st = conn.createStatement();
 
 			//get all statIDs corresponding to a user
@@ -381,9 +388,6 @@ public class Stats extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-	
-	
-	
 	
 	
 }
