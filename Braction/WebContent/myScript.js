@@ -1,3 +1,19 @@
+function logout(){
+    $.ajax({
+                url: 'Logout',
+                data: {
+                    toUrl: "/index.jsp"
+                },
+                //Making the tournament ID code show up on screen
+                success: function (result) {
+
+                }
+
+            });
+            location.reload();
+            return false;
+}
+
 function valLogin() {
     var good = true;
     good = !checkEmpty("lsiu", "Username");
@@ -56,12 +72,16 @@ function valNT(){
 }
 
 function valTCode(){
-    var c = !checkEmpty("tCode", "Tournament code");
+    var c = !checkEmpty("tCOde", "Tournament code");
     var t = checkedTerms("nttAndc");
     return (c && t);
 }
 
 function removeError(id) {
+    if(id == "lsiu" || id == "nsie"){
+        document.getElementById("loginTaken").innerHTML = "<div> </div>";
+        document.getElementById("badLogin").innerHTML = "<div> </div>";
+    }
     var name = id + "e";
     document.getElementById(name).innerHTML = "";
 }

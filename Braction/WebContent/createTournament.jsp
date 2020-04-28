@@ -1,4 +1,4 @@
-<%@ page language="Java" %>
+<%@ page language="Java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <!DOCTYPE html>
 <html>
@@ -8,13 +8,14 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Create or Join a Tournament</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="sty.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   
     <script>
         function createTournament() {
             // First, ensure the form is completely filled out
@@ -22,6 +23,7 @@
             if (v == false) {
                 return false;
             }
+
             // Using jQuery
             $.ajax({
                 url: 'CreateTournament',
@@ -32,7 +34,8 @@
                 },
                 //Making the tournament ID code show up on screen
                 success: function (result) {
-                    $("#code").html(result);
+  					var r = JSON.parse(result);
+                    $("#tCode").html("<div class=\"code\"> Your code: " + r[0] + "</div>");
                 }
 
             });
@@ -49,11 +52,14 @@
             $.ajax({
                 url: 'JoinTournament',
                 data: {
-                    tournamentID: document.joinT.tCode.value
+                    tournamentID: document.joinT.tCOde.value
                 },
-                //Making the tournament ID code show up on screen
                 success: function (result) {
-                    $("#tCodee").html(result);
+                	if(result[0] != 'A' && result[0] != 'Y'){
+                		$("#tCOdee").html("<div> Success! Please navigate to your <a href=\"profile.jsp\"> profile page </a> to view the tournament! </div>");
+                	}else{
+                        $("#tCOdee").html("<div>" + result + " Please try a different code. </div>");
+                	}
                 }
 
             });
@@ -65,6 +71,20 @@
 </head>
 
 <body>
+<% 
+		boolean loggedIn = false;
+		HttpSession s = request.getSession();
+		String profile = "";
+		String username = (String)s.getAttribute("username");
+		if(username != null){
+			profile = "<form method=\"GET\" action=\"brackedIdServlet\"> <!-- User ID --> <input type=\"hidden\" name=\"userID\" value=\"1\"><a href=\"profile.jsp\"><input type=\"submit\" class=\"button profile-button\" value=\"Profile\"></a></form><a href=\"#\" class=\"button create-button\">Create Tournament</a><button class=\"button create-button\" value=\"Logout\" onclick=\"logout()\">Logout</button>";
+		}else{
+			RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/login-sign-up.jsp");
+			dispatch.forward(request, response);
+		}
+
+	
+	%>
     <div class="container">
         <div class="row">
 
@@ -79,22 +99,14 @@
             </div>
             <div class="col">
                 <div class="nav-area">
-                    <a href="homepage.html">
+                    <a href="index.jsp">
                             <input type="submit" class="button home-button" value="Home" id="active">
                     </a>
-                    <a href="createTournament.jsp" >
-                        <input type="submit" class="button create-button" value="Create Tournament">
-                    </a>
-                    <form method="GET" action="brackedIdServlet">
-                    <!-- User ID -->
-                        <input type="hidden" name="userID" value="1">
-                        <a href="profile.jsp">
-                            <input type="submit" class="button profile-button" value="Profile">
-                        </a>
-                    </form>
-                    <a href="login-sign-up.jsp">
-                        <input type="submit" class="button login-button" value="Login/Sign Up">
-                    </a>
+                
+				<div>
+					<%= profile %>
+				
+				</div>
                 </div>
             </div>
         </div>
@@ -132,7 +144,7 @@
                             </div>
 
                             <input class="sub" type="submit" value="Generate Your TourneyCode!">
-                            <div id="code">
+                            <div class="loginError" id="tCode">
 
                             </div>
                             <hr class="whole-break">
@@ -152,8 +164,8 @@
                     <p class="item-text">
                         Enter the TourneyCode below:
                     </p>
-                    <input onclick="removeError(this.id)" class="text-inpt" type="text" id="tCode" name="tCode">
-                    <div id="tCodee"></div>
+                    <input onclick="removeError(this.id)" class="text-inpt" type="text" id="tCOde" name="tCOde">
+                    <div class="loginError" id="tCOdee"></div>
                     <br>
                     <div class="tc">
 

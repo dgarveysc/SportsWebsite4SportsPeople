@@ -3,9 +3,9 @@ package bracket;
 public class UserToStats {
 
 	private User user;
-	private boolean won;
+	private int won; // -1 if they haven't played, else 1 or 0
 	
-	public UserToStats(User user, boolean won) {
+	public UserToStats(User user, int won) {
 		this.user = user;
 		this.won = won;
 	}
@@ -18,11 +18,11 @@ public class UserToStats {
 		this.user = user;
 	}
 
-	public boolean isWon() {
+	public int isWon() {
 		return won;
 	}
 
-	public void setWon(boolean won) {
+	public void setWon(int won) {
 		this.won = won;
 	}
 	

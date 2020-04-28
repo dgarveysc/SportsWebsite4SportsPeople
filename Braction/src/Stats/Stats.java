@@ -1,3 +1,5 @@
+package Stats;
+
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -179,7 +181,7 @@ public class Stats extends HttpServlet {
 
 
 			// now run Python script thru matPlotLib
-			ProcessBuilder pb = new ProcessBuilder("python", "C:\\Users\\arico\\Desktop\\test.py", userIDString);
+			ProcessBuilder pb = new ProcessBuilder("python", "C:\\Users\\arico\\Documents\\Github\\SportsWebsite4SportsPeople\\Braction\\src\\Stats\\plot.py", userIDString);
 			Process p = pb.start();
 				// matPlotLib will output fiveID.png, twentyID.png, and allID.png, for rank change graphs
 			// wait until done then continue with other stuff

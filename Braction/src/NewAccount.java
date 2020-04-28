@@ -5,13 +5,15 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-​
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-​
+import javax.servlet.http.HttpSession;
+
 
 @WebServlet("/NewAccount")
 public class NewAccount extends HttpServlet {
@@ -19,12 +21,10 @@ public class NewAccount extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		String confPass = request.getParameter("confirmPass");
+		String username = request.getParameter("uname");
+		String password = request.getParameter("pword");
+		String confPass = request.getParameter("cpword");
 		String readTAC = request.getParameter("natAndc");
-		PrintWriter out = response.getWriter(); 
-		response.setContentType("text/html"); out.println("<html>");
 		String next = "/login-sign-up.jsp";
 		boolean empty = false;
 		System.out.println(username + " " + password + " " + email + " " + confPass + " " + readTAC);	
@@ -34,8 +34,7 @@ public class NewAccount extends HttpServlet {
 			if(password == "") {request.setAttribute("passwordError", "\tPlease fill out the password section.");}
 			if(confPass == "") {request.setAttribute("confpassError", "\tPlease fill out the password confirmation section.");}
 			if(readTAC == null) {request.setAttribute("readTACError", "\tPlease read the terms and conditions.");*/
-​
-​
+
 			//Make sure servlet doesn't go through to next code block
 			empty = true;
 			
@@ -51,21 +50,23 @@ public class NewAccount extends HttpServlet {
 			
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hw4?user=root&password=root");
-				st = connection.prepareStatement("SELECT * FROM userinfo WHERE email=?");
+				connection = DriverManager.getConnection("jdbc:mysql://localhost/sportswebsite?user=root&password=root");
+				st = connection.prepareStatement("SELECT * FROM Users WHERE email=?");
 				st.setString(1, email);
 				rs = st.executeQuery();
 				if(rs.next()) {
 					//If username and email are already in the database, ask them to provide different ones
-					request.setAttribute("signUpError", "\tEmail already taken, please sign up with a new one.");
+					request.setAttribute("signUpError", "Email already taken, please sign up with a new one.");
+					System.out.println("Already taken");
 				}
 				else {
 					//Register user in the database and return a new page with favorites and logout
-					PreparedStatement newuser = connection.prepareStatement("INSERT INTO userinfo VALUES (?, ?, ?)");
-					newuser.setString(1, email);
-					newuser.setString(2, username);
-					newuser.setString(3, password);
-					newuser.execute();**/
+					PreparedStatement newuser = connection.prepareStatement("INSERT INTO Users (username, passphrase, email, points) VALUES (?, ?, ?, ?)");
+					newuser.setString(1, username);
+					newuser.setString(2, password);
+					newuser.setString(3, email);
+					newuser.setInt(4, 0);
+					newuser.execute();
                     request.setAttribute("loggedIn", "true");
                     HttpSession session = request.getSession();
                     session.setAttribute("username", username);
@@ -86,25 +87,28 @@ public class NewAccount extends HttpServlet {
 				
 			} catch (SQLException sqle) {
 				System.out.println(sqle.getMessage());
-			} catch (ClassNotFoundException e) {
+			} /*catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} finally {
+			}*/ catch (Exception e ){
+				e.printStackTrace();
+			}/*finally { {
+			
 				try {
 					connection.close();
 					st.close();
 					rs.close();
 				} catch (SQLException sqle2) {
 					System.out.println(sqle2.getMessage());
-				}
+				}*/
 			}
 			
 		}
-	}
-​
+	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-​
+
 }
