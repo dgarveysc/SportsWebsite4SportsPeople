@@ -26,5 +26,7 @@ public class User {
 		this.name = name;
 	}
 
-	
+	public String toString() {
+		return String.format("userID: %d, name: %s", userID, name);
+	}
 }

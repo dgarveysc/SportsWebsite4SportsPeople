@@ -26,5 +26,12 @@ public class UserToStats {
 		this.won = won;
 	}
 	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(user.toString());
+		sb.append(" ");
+		sb.append(String.format("won: %d", won));
+		return sb.toString();
+	}
 	
 }

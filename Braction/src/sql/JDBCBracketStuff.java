@@ -483,7 +483,7 @@ public class JDBCBracketStuff {
 		ResultSet rs = null;
 		UserToStats u = null;
 		try {
-			ps = conn.prepareStatement("SELECT userID, statsID FROM UserToStats WHERE userToStatsID=?");
+			ps = conn.prepareStatement("SELECT userID, statsID FROM UserToGameStats WHERE userToGameStatsID=?");
 			ps.setString(1, userToStatsID);
 			rs = ps.executeQuery();
 			if (rs.next()) {
@@ -730,7 +730,8 @@ public class JDBCBracketStuff {
 			System.out.printf("result from adding bob was %d\n", result);
 			boolean result2 = JDBCBracketStuff.update(8, 9, true, b.getBracketID());
 			System.out.printf("updated with result %b\n", result2);
-			
+			System.out.println("bracket data:");
+			System.out.println(getBracket(b.getBracketID()));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

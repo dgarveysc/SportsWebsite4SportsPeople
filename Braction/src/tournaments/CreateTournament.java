@@ -41,7 +41,7 @@ public class CreateTournament extends HttpServlet {
 		boolean success = true;
 		String name = request.getParameter("tournamentName");
 		try {
-			userID = (Integer)session.getAttribute("userID");
+			userID = Integer.parseInt((String)session.getAttribute("userID"));
 			gameType = Integer.parseInt(request.getParameter("gameType"));
 		} catch (NumberFormatException | NullPointerException e) {
 			success = false;
@@ -60,7 +60,7 @@ public class CreateTournament extends HttpServlet {
 			messages[0] = b.getBracketCode();
 			messages[1] = Integer.toString(b.getBracketID());
 		} else {
-			messages[0] = "Error creating tournament";
+			messages[0] = "error creating tournament";
 			messages[1] = "";
 		}
 		Gson gson = new Gson();
