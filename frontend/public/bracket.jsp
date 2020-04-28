@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Tournament bracket</title>
+<title>Tournament bracket!</title>
 	<link rel="stylesheet" href="bracket.css">
 	<script>
 	function change(curr, next){
