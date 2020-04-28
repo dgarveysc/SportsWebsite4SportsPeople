@@ -659,15 +659,16 @@ public class JDBCBracketStuff {
 		ResultSet rs = null;
 		boolean success = false;
 		try {
-			if (Math.abs(slot1-slot2) > 1) {
+			if (Math.abs(slot1-slot2) > 1 || Math.min(slot1, slot2) % 2 == 1 || Math.max(slot1, slot2) % 2 == 0) {
 				success = false;
 			} else {
 				int newSlot = Math.min(slot1, slot2)/2;
 				// rs = st.executeQuery("SELECT * from Student where fname='" + name + "'");
-				ps = conn.prepareStatement("SELECT bracketS?, bracketS? FROM Bracket WHERE bracketID=?");
-				ps.setString(1, Integer.toString(slot1));
-				ps.setString(2, Integer.toString(slot2));
-				ps.setString(3, Integer.toString(bracketID));
+				String query = String.format("SELECT bracketS%d, bracketS%d FROM Bracket WHERE bracketID=?", slot1, slot2);
+				System.out.printf("executing query %s\n", query);
+				ps = conn.prepareStatement(query);
+				ps.setString(1, Integer.toString(bracketID));
+				
 				rs = ps.executeQuery();
 				int winnerID = -1; 
 				if (rs.next()) {
@@ -689,10 +690,11 @@ public class JDBCBracketStuff {
 				int userID = userIDofUserToStats(winnerID);
 				if (userID != -1) {
 					int userToStatsID = addToUserToStats(userID, round);
-					ps = conn.prepareStatement("UPDATE Bracket Set bracketS? = ? WHERE bracketID=?");
-					ps.setString(1, Integer.toString(newSlot));
-					ps.setString(2, Integer.toString(userToStatsID));
-					ps.setString(3, Integer.toString(bracketID));
+					query = String.format("UPDATE Bracket Set bracketS%d=? WHERE bracketID=?", newSlot);
+					System.out.printf("executing query %s\n", query);
+					ps = conn.prepareStatement(query);
+					ps.setString(1, Integer.toString(userToStatsID));
+					ps.setString(2, Integer.toString(bracketID));
 					ps.executeUpdate();
 					success = true;
 				}				

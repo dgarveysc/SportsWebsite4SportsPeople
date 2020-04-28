@@ -34,7 +34,7 @@ public class CreateTournament extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session =request.getSession();
+		HttpSession session =request.getSession(false);
 		int userID = -1;
 		int gameType = -1;
 		
