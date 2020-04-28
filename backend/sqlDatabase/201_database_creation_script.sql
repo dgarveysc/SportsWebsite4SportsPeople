@@ -12,17 +12,14 @@ USE SportsWebsite;
  CREATE TABLE Stats (
 	statsID INT(11) PRIMARY KEY AUTO_INCREMENT,
 	won BOOLEAN NULL,
-	prize INT(11) NULL,
 	bracketRound INT(11) NULL,
-	gameID INT(11) NULL, -- in case we add support for different games
 	xp INT(11) NULL,
 	gameDate DATE NULL, -- date score is updated on
-	oppRank INT(11) NULL, -- to get information about opponents rank
-	FOREIGN KEY fk1(gameID) REFERENCES GameTypes(gameTypeID)
+	oppRank INT(11) NULL -- to get information about opponents rank
 );
 
 CREATE TABLE Users(
-	UserID INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	userID INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL,
     passphrase VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
@@ -91,17 +88,26 @@ CREATE TABLE Bracket (
     FOREIGN KEY fk2(bracketID) REFERENCES Bracket(bracketID)
  );
  
-
-
+CREATE TABLE Opponents (
+	opponentsID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    userToGameStatsID1 INT NOT NULL,
+    userToGameStatsID2 INT NOT NULL,
+    FOREIGN KEY fk1(userToGameStatsID1) REFERENCES UserToGameStats(userToGameStatsID),
+    FOREIGN KEY fk2(userToGameStatsID2) REFERENCES UserToGameStats(userToGameStatsID)
+);
 
 Create TABLE Friends(
 	friendID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	userID1 INT,
     userID2 INT NOT NULL,
     acceptedStatus INT NOT NULL,
-    FOREIGN KEY fk1(UserID1) REFERENCES Users(userID),
-    FOREIGN KEY fk2(UserID2) REFERENCES Users(userID)
+    FOREIGN KEY fk1(userID1) REFERENCES Users(userID),
+    FOREIGN KEY fk2(userID2) REFERENCES Users(userID)
 );
-INSERT INTO Users (username, passphrase, email, points) VALUES ('god gamer', 'mwhaha','god_gamer@godgames.god',69);
-INSERT INTO Users (username, passphrase, email, points) VALUES ('bob the potato', 'bloop','5iq@dumbdumb.com',0);
-INSERT INTO Stats (won, prize, bracketRound, gameID, xp, gameDate, oppRank) VALUES (TRUE, 50, 1, 3, 1, '2020-04-25', 1200);
+INSERT INTO Users (username, passphrase, email, points) VALUES ('god gamer', 'mwhaha','god_gamer@godgames.god',1000);
+INSERT INTO Users (username, passphrase, email, points) VALUES ('bob the potato', 'bloop','5iq@dumbdumb.com',1000);
+INSERT INTO Stats (won) VALUES (NULL);
+INSERT INTO Stats (won) VALUES (NULL);
+INSERT INTO UserToGameStats (userID, statsID) VALUES (1, 1);
+INSERT INTO UserToGameStats (userID, statsID) VALUES (2, 2);
+INSERT INTO Opponents(userToGameStatsID1, userToGameStatsID2) VALUES (1, 2);
